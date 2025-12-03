@@ -16,32 +16,21 @@ set(
 set(
     app_requires
     esp_lcd_gc9107
+    button
+    cmake_utilities
     coremark
-    esp-file-iterator
-    esp_mmap_assets
-    fmt
+    # esp_cli
+    # esp_cli_commands
     esp_lcd_touch
     esp_lcd_touch_xpt2046
-    lvgl
-    esp_lvgl_port
-    esp_lv_decoder
-    esp_emote_gfx
-    esp_new_jpeg
+    # esp_linenoise
     esp_lv_fs
-    button
-    esp-lib-utils
+    esp_lvgl_port
+    esp_mmap_assets
+    fmt
+    freertos-cpp
     littlefs
-    xz
-    zlib
-    libpng
-    coremark
-    extended_vfs
-    esp_tinyusb
-    esp_schedule
-    #esp_cli 
-    #esp_cli_commands
-    #esp_linenoise #dezactiveaza neaparat console componenta din IDF
-    argtable3
+    lvgl
 )
 
 set(
@@ -61,19 +50,15 @@ set(
     esp_common
     esp_psram
     esp_hw_support
-    esp_rom
-    esp_wifi
     esp_lcd
     console
-    #console #pentru ca linenoise
 )
 
 set(
-    my_components_add
-    esp_lcd_gc9107
-    
+    my_components
     filesystem-v003
     one-cli-v005
+    onebutton-v001
 )
 
 idf_component_register(
@@ -82,8 +67,12 @@ idf_component_register(
     INCLUDE_DIRS
     ${app_include_dirs}
     REQUIRES
-    ${app_requires} ${my_components_add}
+    ${app_requires} ${my_components}
     PRIV_REQUIRES
     ${app_priv_requires}
     WHOLE_ARCHIVE
+)
+
+add_compile_options(
+   -Wno-error
 )

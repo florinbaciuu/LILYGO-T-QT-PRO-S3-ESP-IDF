@@ -17,9 +17,9 @@
  * comment all to chose internal MMC as filesystem
  */
 //#define SDCARD_USE
-#define LITTLEFS_USE
+//#define LITTLEFS_USE
 //#define SPIFFS_USE
-//#define FFAT_USE
+#define FFAT_USE
 
 /**********
  * END SETTINGS

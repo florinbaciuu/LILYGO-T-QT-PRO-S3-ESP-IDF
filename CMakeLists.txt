@@ -24,9 +24,7 @@ add_compile_options(
 
 set(
    EXTRA_COMPONENT_DIRS
-   lib
    mylibs
-   cmd
 )
 
 # chestii generale ccache

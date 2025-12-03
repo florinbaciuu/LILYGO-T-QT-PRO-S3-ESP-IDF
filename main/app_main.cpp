@@ -216,7 +216,8 @@ extern "C" void app_main(void) {
     esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, 128, 128, color_buf);
     // esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, 128, 128, &gImage_image_logo);
 
-    init_filesystem_sys();
+    initialize_internal_fat_filesystem();
+    initialize_filesystem_littlefs();
     StartCLI();
 }  // app_main
 
