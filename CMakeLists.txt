@@ -50,10 +50,13 @@ endif()
 # aici se încarcă magia IDF
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 # acum poți folosi funcțiile ESP-IDF deoarece ai incarcat magia
-idf_build_set_property(
-   MINIMAL_BUILD
-   ON
-)
+idf_build_set_property(MINIMAL_BUILD ON)
+
+# ---------- dezactivăm -Werror global (după includerea IDF) ----
+# --- disable -Werror globally ---
+idf_build_set_property(COMPILE_OPTIONS "-Wno-error" APPEND)
+idf_build_set_property(COMPILE_OPTIONS "-Wno-error=type-limits" APPEND)
+
 project(
    project-test-espidf
 )
