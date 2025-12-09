@@ -208,16 +208,18 @@ extern "C" void app_main(void) {
 #define COL_BLUE  0xF800  // roșu în standard, dar la tine e albastru
 #define COL_WHITE 0xFFFF
 #define COL_BLACK 0x0000
-    uint16_t        selected_color = COL_RED;  // aici selecteaza culoarea
+    uint16_t        selected_color = COL_BLUE;  // aici selecteaza culoarea
     static uint16_t color_buf[128 * 128];
     for (int i = 0; i < 128 * 128; i++) {
         color_buf[i] = selected_color;
     }
     esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, 128, 128, color_buf);
-    // esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, 128, 128, &gImage_image_logo);
+    vTaskDelay(1200);
+    esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, 128, 128, &gImage_image_logo);
 
-    initialize_internal_fat_filesystem();
-    initialize_filesystem_littlefs();
+    //initialize_internal_fat_filesystem();
+    //initialize_filesystem_littlefs();
+    init_filesystem_sys();
     StartCLI();
 }  // app_main
 
