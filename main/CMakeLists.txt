@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.16)
 
 set(
     app_sources
-    "app_main.cpp"
+    "main.cpp"
     "rtos.cpp"
 )
 

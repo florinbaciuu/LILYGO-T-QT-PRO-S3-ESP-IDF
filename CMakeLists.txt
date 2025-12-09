@@ -49,6 +49,8 @@ endif()
 
 # aici se încarcă magia IDF
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
+
 # acum poți folosi funcțiile ESP-IDF deoarece ai incarcat magia
 idf_build_set_property(MINIMAL_BUILD ON)
 
