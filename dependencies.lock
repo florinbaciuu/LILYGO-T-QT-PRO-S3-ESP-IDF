@@ -2,45 +2,21 @@ dependencies:
   cmake_utilities:
     dependencies: []
     source:
-      path: 
-        /Users/florinbaciu/Desktop/LILYGO-T-QT-PRO-S3-ESP-IDF/components/cmake_utilities
+      path: /Users/florinbaciu/Desktop/LILYGO-T-QT-PRO-S3-ESP-IDF/components/cmake_utilities
       type: local
     version: 1.1.1
-  esp_cli_commands:
-    dependencies: []
-    source:
-      path: 
-        /Users/florinbaciu/Desktop/LILYGO-T-QT-PRO-S3-ESP-IDF/components/esp_cli_commands
-      type: local
-    version: 0.1.0
-  esp_lcd_touch:
-    dependencies: []
-    source:
-      path: 
-        /Users/florinbaciu/Desktop/LILYGO-T-QT-PRO-S3-ESP-IDF/components/esp_lcd_touch
-      type: local
-    version: 1.1.2
-  esp_linenoise:
-    dependencies: []
-    source:
-      path: 
-        /Users/florinbaciu/Desktop/LILYGO-T-QT-PRO-S3-ESP-IDF/components/esp_linenoise
-      type: local
-    version: 1.0.3
   esp_mmap_assets:
     dependencies: []
     source:
-      path: 
-        /Users/florinbaciu/Desktop/LILYGO-T-QT-PRO-S3-ESP-IDF/components/esp_mmap_assets
+      path: /Users/florinbaciu/Desktop/LILYGO-T-QT-PRO-S3-ESP-IDF/components/esp_mmap_assets
       type: local
     version: 1.4.0
   idf:
     source:
       type: idf
-    version: 5.5.1
+    version: 5.5.2
   lvgl/lvgl:
-    component_hash: 
-      17e68bfd21f0edf4c3ee838e2273da840bf3930e5dbc3bfa6c1190c3aed41f9f
+    component_hash: 17e68bfd21f0edf4c3ee838e2273da840bf3930e5dbc3bfa6c1190c3aed41f9f
     dependencies: []
     source:
       registry_url: https://components.espressif.com/
@@ -48,12 +24,9 @@ dependencies:
     version: 9.4.0
 direct_dependencies:
 - espressif/cmake_utilities
-- espressif/esp_cli_commands
-- espressif/esp_lcd_touch
-- espressif/esp_linenoise
 - espressif/esp_mmap_assets
 - idf
 - lvgl/lvgl
-manifest_hash: 2d27660bc3304ced9cfbdab727be653dce7e2966e0f3b7f3cc8daee502805fc5
+manifest_hash: abe27a5bd5489eb1a2bee78c5012efdbd1c12e43312c2d57727bb86a0121c43e
 target: esp32s3
 version: 2.0.0

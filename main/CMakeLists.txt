@@ -19,11 +19,6 @@ set(
     button
     cmake_utilities
     coremark
-    # esp_cli
-    # esp_cli_commands
-    esp_lcd_touch
-    esp_lcd_touch_xpt2046
-    # esp_linenoise
     esp_lv_fs
     esp_lvgl_port
     esp_mmap_assets
