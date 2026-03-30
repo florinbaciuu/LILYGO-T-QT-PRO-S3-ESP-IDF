@@ -73,50 +73,41 @@ esp_err_t initialize_filesystem_littlefs() {
     // Use POSIX and C standard library functions to work with files.
     // First create a file.
     ESP_LOGI(LITTLEFS_TAG, "Opening file");
-    FILE *f = fopen("/littlefs/hello.txt", "w");
+    FILE *f = fopen("/littlefs/test_littlefs_not_final.txt", "w");
     if (f == NULL) {
         ESP_LOGE(LITTLEFS_TAG, "Failed to open file for writing");
         return ESP_FAIL;
     }
-    fprintf(f, "Hello World!\n");
+    fprintf(f, "LITTLEFS Test OK!\n");
     fclose(f);
     ESP_LOGI(LITTLEFS_TAG, "File written");
 
+    // Check if destination file exists before renaming
+    struct stat st;
+    if (stat("/littlefs/test_littlefs_final.txt", &st) == 0) {
+        // Delete it if it exists
+        unlink("/littlefs/test_littlefs_final.txt");
+    }
+
     // Rename original file
-    // ESP_LOGI(TAG, "Renaming file");
-    // if (rename("/littlefs/hello.txt", "/littlefs/foo.txt") != 0) {
-    //     ESP_LOGE(TAG, "Rename failed");
-    //     return;
-    // }
+    ESP_LOGI(LITTLEFS_TAG, "Renaming file");
+    if (rename("/littlefs/test_littlefs_not_final.txt", "/littlefs/test_littlefs_final.txt") != 0) {
+        ESP_LOGE(LITTLEFS_TAG, "Rename failed");
+        return ESP_FAIL;
+    }
 
     // Open renamed file for reading
     ESP_LOGI(LITTLEFS_TAG, "Reading file");
-    f = fopen("/littlefs/hello.txt", "r");
+    f = fopen("/littlefs/test_littlefs_final.txt", "r");
     if (f == NULL) {
         ESP_LOGE(LITTLEFS_TAG, "Failed to open file for reading");
         return ESP_FAIL;
     }
 
-    char line[128] = {0};
-    fgets(line, sizeof(line), f);
-    fclose(f);
-    // strip newline
-    char* pos = strpbrk(line, "\r\n");
-    if (pos) {
-        *pos = '\0';
-    }
-    ESP_LOGI(LITTLEFS_TAG, "Read from file: '%s'", line);
-
-    ESP_LOGI(LITTLEFS_TAG, "Reading from flashed filesystem example.txt");
-    f = fopen("/littlefs/example.txt", "r");
-    if (f == NULL) {
-        ESP_LOGE(LITTLEFS_TAG, "Failed to open file for reading");
-        return ESP_FAIL;
-    }
-    fgets(line, sizeof(line), f);
-    fclose(f);
-    // strip newline
-    pos = strpbrk(line, "\r\n");
+    char line[128] = {0}; // buffer for reading first line ...,
+    fgets(line, sizeof(line), f); // gets the text from f and put in lines
+    fclose(f);  // close f
+    char* pos = strpbrk(line, "\r\n"); // strip newline
     if (pos) {
         *pos = '\0';
     }

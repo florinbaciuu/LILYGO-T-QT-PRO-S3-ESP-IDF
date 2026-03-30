@@ -51,7 +51,7 @@ set(
 
 set(
     my_components
-    filesystem-v003
+    filesystem-tqt-v003
     one-cli-v005
     onebutton-v001
 )

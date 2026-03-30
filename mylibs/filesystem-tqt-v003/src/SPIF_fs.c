@@ -27,7 +27,7 @@ esp_err_t initialize_filesystem_spiffs(){
 
     esp_vfs_spiffs_conf_t conf = {
       .base_path = "/spiffs",
-      .partition_label = NULL,
+      .partition_label = "spiffs",
       .max_files = 5,
       .format_if_mount_failed = true
     };
@@ -80,62 +80,45 @@ esp_err_t initialize_filesystem_spiffs(){
     // Use POSIX and C standard library functions to work with files.
     // First create a file.
     ESP_LOGI(SPIFFS_TAG, "Opening file");
-    FILE* f = fopen("/spiffs/hello.txt", "w");
+    FILE* f = fopen("/spiffs/SPIFFS_test_not_renamed.txt", "w");
     if (f == NULL) {
         ESP_LOGE(SPIFFS_TAG, "Failed to open file for writing");
         return ESP_FAIL;
     }
-    fprintf(f, "Hello World!\n");
+    fprintf(f, "SPIFFS Test OK!\n");
     fclose(f);
     ESP_LOGI(SPIFFS_TAG, "File written");
 
-    // // Check if destination file exists before renaming
-    // struct stat st;
-    // if (stat("/spiffs/foo.txt", &st) == 0) {
-    //     // Delete it if it exists
-    //     unlink("/spiffs/foo.txt");
-    // }
+    // Check if destination file exists before renaming
+    struct stat st;
+    if (stat("/spiffs/SPIFFS_test_renamed.txt", &st) == 0) {
+        // Delete it if it exists
+        unlink("/spiffs/SPIFFS_test_renamed.txt");
+    }
 
-    // // Rename original file
-    // ESP_LOGI(SPIFFS_TAG, "Renaming file");
-    // if (rename("/spiffs/hello.txt", "/spiffs/foo.txt") != 0) {
-    //     ESP_LOGE(SPIFFS_TAG, "Rename failed");
-    //     return;
-    // }
+    // Rename original file
+    ESP_LOGI(SPIFFS_TAG, "Renaming file");
+    if (rename("/spiffs/SPIFFS_test_not_renamed.txt", "/spiffs/SPIFFS_test_renamed.txt") != 0) {
+        ESP_LOGE(SPIFFS_TAG, "Rename failed");
+        return ESP_FAIL;
+    }
 
     // Open renamed file for reading
     ESP_LOGI(SPIFFS_TAG, "Reading file");
-    f = fopen("/spiffs/hello.txt", "r");
+    f = fopen("/spiffs/SPIFFS_test_renamed.txt", "r");
     if (f == NULL) {
         ESP_LOGE(SPIFFS_TAG, "Failed to open file for reading");
         return ESP_FAIL;
     }
-    char line[64];
-    fgets(line, sizeof(line), f);
-    fclose(f);
-    // strip newline
-    char* pos = strchr(line, '\n');
+    char line[64]; // buffer for reading first line ...,
+    fgets(line, sizeof(line), f); // gets the text from f and put in lines
+    fclose(f); // close f
+    char* pos = strchr(line, '\n'); // strip newline
     if (pos) {
         *pos = '\0';
     }
     ESP_LOGI(SPIFFS_TAG, "Read from file: '%s'", line);
     
-    vTaskDelay(100);
-
-    ESP_LOGI(SPIFFS_TAG, "Reading from flashed filesystem example.txt");
-    f = fopen("/spiffs/example.txt", "r");
-    if (f == NULL) {
-        ESP_LOGE(SPIFFS_TAG, "Failed to open file for reading");
-        return ESP_FAIL;
-    }
-    fgets(line, sizeof(line), f);
-    fclose(f);
-    // strip newline
-    pos = strpbrk(line, "\r\n");
-    if (pos) {
-        *pos = '\0';
-    }
-    ESP_LOGI(SPIFFS_TAG, "Read from file: '%s'", line);
 
     return ESP_OK;
 }

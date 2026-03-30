@@ -13,7 +13,7 @@ git submodule update --init --recursive
 ---
 ### or to clone complete with submodules:
 ```
-git clone --recurse-submodules git clone https://github.com/florinbaciuu/LILYGO-T-QT-PRO-S3-ESP-IDF.git
+git clone --recurse-submodules https://github.com/florinbaciuu/LILYGO-T-QT-PRO-S3-ESP-IDF.git
 ```
 ---
 ### Init , add, commit, branch, set, push the rep:

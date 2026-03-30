@@ -47,8 +47,8 @@
 static const char* FS_TAG = "FS";
 
 bool init_filesystem_sys() {
-    initialize_filesystem_sdmmc();
-    vTaskDelay(100);
+    //initialize_filesystem_sdmmc();
+    //vTaskDelay(100);
     initialize_internal_fat_filesystem();
     initialize_filesystem_littlefs();
     vTaskDelay(100);
