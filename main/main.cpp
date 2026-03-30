@@ -20,11 +20,11 @@ extern "C" {
 
 #include <fcntl.h>
 
-#include "driver/gpio.h"
-#include "esp_bootloader_desc.h"
-#include "esp_rom_sys.h"
+#include "driver/gpio.h" // IWYU pragma: keep
+#include "esp_bootloader_desc.h" // IWYU pragma: keep
+#include "esp_rom_sys.h" // IWYU pragma: keep
 #include "esp_log.h"
-#include "freertos/FreeRTOS.h"
+#include "freertos/FreeRTOS.h" // IWYU pragma: keep
 #include "freertos/task.h"
 
 // #include "esp_console.h"

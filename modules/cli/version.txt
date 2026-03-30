@@ -1,0 +1,5 @@
+ESP-IDF VERSION:    5.5.2
+PROJECT             0.0.1
+
+LAST MODIFIED:
+
