@@ -118,6 +118,21 @@ esp_err_t initialize_filesystem_spiffs(){
         *pos = '\0';
     }
     ESP_LOGI(SPIFFS_TAG, "Read from file: '%s'", line);
+
+    // ESP_LOGI(SPIFFS_TAG, "Reading from flashed filesystem example.txt");
+    // f = fopen("/spiffs/example.txt", "r");
+    // if (f == NULL) {
+    //     ESP_LOGE(SPIFFS_TAG, "Failed to open file for reading");
+    //     return ESP_FAIL;
+    // }
+    // fgets(line, sizeof(line), f);
+    // fclose(f);
+    // // strip newline
+    // pos = strpbrk(line, "\r\n");
+    // if (pos) {
+    //     *pos = '\0';
+    // }
+    // ESP_LOGI(SPIFFS_TAG, "Read from file: '%s'", line);
     
 
     return ESP_OK;

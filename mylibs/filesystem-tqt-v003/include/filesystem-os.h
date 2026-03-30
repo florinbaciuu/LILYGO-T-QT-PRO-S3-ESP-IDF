@@ -15,7 +15,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 // PROTOTYPES
-bool init_filesystem_sys();
+bool init_filesystem_sys_qt();
 
 #ifdef __cplusplus
 }

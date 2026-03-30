@@ -1,7 +1,5 @@
 
 
-
-
 /**********************
  *   INCLUDES
  **********************/
@@ -20,12 +18,9 @@
 
 #include "esp_littlefs.h"
 
-
-
 /**********************
  *   FILESYSTEM
  **********************/
-
 
 static const char* LITTLEFS_TAG = "LITTLEFS";
 
@@ -42,16 +37,12 @@ esp_err_t initialize_filesystem_littlefs() {
     // Use settings defined above to initialize and mount LittleFS filesystem.
     // Note: esp_vfs_littlefs_register is an all-in-one convenience function.
     esp_err_t ret = esp_vfs_littlefs_register(&conf);
-    if (ret != ESP_OK)
-    {
-        if (ret == ESP_FAIL)
-        {
+    if (ret != ESP_OK) {
+        if (ret == ESP_FAIL) {
             ESP_LOGE(LITTLEFS_TAG, "Failed to mount or format filesystem");
-        } else if (ret == ESP_ERR_NOT_FOUND)
-        {
+        } else if (ret == ESP_ERR_NOT_FOUND) {
             ESP_LOGE(LITTLEFS_TAG, "Failed to find LittleFS partition");
-        } else
-        {
+        } else {
             ESP_LOGE(LITTLEFS_TAG, "Failed to initialize LittleFS (%s)", esp_err_to_name(ret));
         }
         return ret;
@@ -59,21 +50,19 @@ esp_err_t initialize_filesystem_littlefs() {
 
     size_t total = 0, used = 0;
     ret = esp_littlefs_info(conf.partition_label, &total, &used);
-    if (ret != ESP_OK)
-    {
+    if (ret != ESP_OK) {
         ESP_LOGE(LITTLEFS_TAG,
             "Failed to get LittleFS partition information (%s)",
             esp_err_to_name(ret));
         esp_littlefs_format(conf.partition_label);
-    } else
-    {
+    } else {
         ESP_LOGI(LITTLEFS_TAG, "Partition size: total: %d, used: %d", total, used);
     }
 
     // Use POSIX and C standard library functions to work with files.
     // First create a file.
     ESP_LOGI(LITTLEFS_TAG, "Opening file");
-    FILE *f = fopen("/littlefs/test_littlefs_not_final.txt", "w");
+    FILE* f = fopen("/littlefs/test_littlefs_not_final.txt", "w");
     if (f == NULL) {
         ESP_LOGE(LITTLEFS_TAG, "Failed to open file for writing");
         return ESP_FAIL;
@@ -104,16 +93,29 @@ esp_err_t initialize_filesystem_littlefs() {
         return ESP_FAIL;
     }
 
-    char line[128] = {0}; // buffer for reading first line ...,
-    fgets(line, sizeof(line), f); // gets the text from f and put in lines
-    fclose(f);  // close f
-    char* pos = strpbrk(line, "\r\n"); // strip newline
+    char line[128] = {0};               // buffer for reading first line ...,
+    fgets(line, sizeof(line), f);       // gets the text from f and put in lines
+    fclose(f);                          // close f
+    char* pos = strpbrk(line, "\r\n");  // strip newline
     if (pos) {
         *pos = '\0';
     }
     ESP_LOGI(LITTLEFS_TAG, "Read from file: '%s'", line);
+
+    // ESP_LOGI(LITTLEFS_TAG, "Reading from flashed filesystem example.txt");
+    // f = fopen("/littlefs/example.txt", "r");
+    // if (f == NULL) {
+    //     ESP_LOGE(LITTLEFS_TAG, "Failed to open file for reading");
+    //     return ESP_FAIL;
+    // }
+    // fgets(line, sizeof(line), f);
+    // fclose(f);
+    // // strip newline
+    // pos = strpbrk(line, "\r\n");
+    // if (pos) {
+    //     *pos = '\0';
+    // }
+    // ESP_LOGI(LITTLEFS_TAG, "Read from file: '%s'", line);
+
     return ESP_OK;
 }
-
-
-

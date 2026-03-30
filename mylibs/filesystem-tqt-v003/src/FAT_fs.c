@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "esp_system.h"
-
+#include <errno.h>
 #include "esp_log.h"
 #include "esp_vfs_fat.h"
 
@@ -44,5 +44,33 @@ esp_err_t initialize_internal_fat_filesystem() {
         return InitMountFlagErr;
     }
     ESP_LOGI(FFAT_TAG, "Mounted FATFS at %s", FAT_MOUNT_PATH);
+    // Use POSIX and C standard library functions to work with files.
+    // First create a file.
+
+    ESP_LOGI(FFAT_TAG, "Opening file");
+    char path[64];
+    snprintf(path, sizeof(path), "%s/hello.txt", FAT_MOUNT_PATH);
+    FILE* f = fopen(path, "w");
+    if (!f) {
+        ESP_LOGE(FFAT_TAG, "fopen failed, errno=%d (%s)", errno, strerror(errno));
+        return ESP_FAIL;
+    }
+    fprintf(f, "Hello World FAT!\n");
+    fclose(f);
+    ESP_LOGI(FFAT_TAG, "File written");
+    ESP_LOGI(FFAT_TAG, "Reading file");
+    f = fopen(path, "r");
+    if (f == NULL) {
+        ESP_LOGE(FFAT_TAG, "Failed to open file for reading");
+        return ESP_FAIL;
+    }
+    char line[128] = {0};
+    fgets(line, sizeof(line), f);
+    fclose(f);
+    char* pos = strpbrk(line, "\r\n"); // strip newline
+    if (pos) {
+        *pos = '\0';
+    }
+    ESP_LOGI(FFAT_TAG, "Read from file: '%s'", line);
     return ESP_OK;
 }

@@ -216,10 +216,7 @@ extern "C" void app_main(void) {
     esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, 128, 128, color_buf);
     vTaskDelay(1200);
     esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, 128, 128, &gImage_image_logo);
-
-    //initialize_internal_fat_filesystem();
-    //initialize_filesystem_littlefs();
-    init_filesystem_sys();
+    init_filesystem_sys_qt();
     StartCLI();
 }  // app_main
 
